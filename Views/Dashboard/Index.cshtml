@@ -1,0 +1,24 @@
+@model List<FindYourMain.Models.Stats>
+
+<h1>Dashboard</h1>
+
+<table border="1">
+
+    <tr>
+        <th>Kills</th>
+        <th>Assists</th>
+        <th>Damage</th>
+        <th>Date</th>
+    </tr>
+
+    @foreach (var stat in Model)
+    {
+        <tr>
+            <td>@stat.Kills</td>
+            <td>@stat.Assists</td>
+            <td>@stat.Damage</td>
+            <td>@stat.Date</td>
+        </tr>
+    }
+
+</table>
