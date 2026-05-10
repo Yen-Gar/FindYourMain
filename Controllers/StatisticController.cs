@@ -6,9 +6,9 @@ namespace FindYourMain.Controllers
 {
 	public class StatisticsController : Controller
 	{
-		private readonly ApplicationDbContext _context;
+		private readonly AppDbContext _context;
 
-		public StatisticsController(ApplicationDbContext context)
+		public StatisticsController(AppDbContext context)
 		{
 			_context = context;
 		}
