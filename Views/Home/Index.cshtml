@@ -1,15 +1,18 @@
-﻿<h1>Find Your Main</h1>
+﻿<div class="container text-center mt-5">
+    <h1 class="display-4 fw-bold mb-3">Find Your Main</h1>
+    <p class="lead mb-5">Welkom bij Find Your Main!</p>
 
-<p>Welkom bij Find Your Main!</p>
+    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+        <a asp-controller="Character" asp-action="Generate" class="btn btn-primary btn-lg px-4">
+            Genereer karakter
+        </a>
 
-<a href="/Character/Generate">Genereer karakter</a>
-<br />
-<a href="/Dashboard/Index">
-    Bekijk dashboard
-</a>
+        <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-dark btn-lg px-4">
+            Bekijk dashboard
+        </a>
 
-<br /><br />
-
-<a href="/Statistics/Create">
-    Voeg statistieken toe
-</a>
+        <a asp-controller="Statistics" asp-action="Create" class="btn btn-success btn-lg px-4">
+            Voeg statistieken toe
+        </a>
+    </div>
+</div>
