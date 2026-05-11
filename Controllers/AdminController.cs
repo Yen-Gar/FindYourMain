@@ -19,5 +19,17 @@ namespace FindYourMain.Controllers
             var users = _userManager.Users.ToList();
             return View(users);
         }
+
+        public async Task<IActionResult> MakeAdmin(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
