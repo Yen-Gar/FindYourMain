@@ -2,23 +2,37 @@
 
 <h1>Dashboard</h1>
 
-<table border="1">
+@if (ViewBag.BestCharacter != null)
+{
+    <div class="best-character">
+        <h2>🏆 Best Character</h2>
+        <p>Character ID: @ViewBag.BestCharacter.CharacterID</p>
+        <p>Kills: @ViewBag.BestCharacter.TotalKills</p>
+        <p>Damage: @ViewBag.BestCharacter.TotalDamage</p>
+        <p>Assists: @ViewBag.BestCharacter.TotalAssists</p>
+    </div>
+}
 
-    <tr>
-        <th>Kills</th>
-        <th>Assists</th>
-        <th>Damage</th>
-        <th>Date</th>
-    </tr>
+<div class="card-box">
 
-    @foreach (var stat in Model)
-    {
+    <table>
         <tr>
-            <td>@stat.Kills</td>
-            <td>@stat.Assists</td>
-            <td>@stat.Damage</td>
-            <td>@stat.Date</td>
+            <th>Kills</th>
+            <th>Assists</th>
+            <th>Damage</th>
+            <th>Date</th>
         </tr>
-    }
 
-</table>
+        @foreach (var stat in Model)
+        {
+            <tr>
+                <td>@stat.Kills</td>
+                <td>@stat.Assists</td>
+                <td>@stat.Damage</td>
+                <td>@stat.Date</td>
+            </tr>
+        }
+
+    </table>
+
+</div>
