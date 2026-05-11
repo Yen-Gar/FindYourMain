@@ -16,11 +16,8 @@ namespace FindYourMain.Controllers
 
         public IActionResult Index()
         {
-            var conn = _context.Database.GetDbConnection().ConnectionString;
-            Console.WriteLine("DB: " + conn);
-
+           
             var stats = _context.Stats.ToList();
-
             return View(stats);
         }
     }
