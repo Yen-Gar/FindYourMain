@@ -106,6 +106,8 @@ namespace FindYourMain.Migrations
 
                     b.HasKey("StatID");
 
+                    b.HasIndex("CharacterID");
+
                     b.ToTable("Stats");
                 });
 
@@ -130,6 +132,17 @@ namespace FindYourMain.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("FindYourMain.Models.Stats", b =>
+                {
+                    b.HasOne("FindYourMain.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
                 });
 #pragma warning restore 612, 618
         }

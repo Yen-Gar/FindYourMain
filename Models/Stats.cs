@@ -8,15 +8,13 @@ namespace FindYourMain.Models
         public int StatID { get; set; }
 
         public int Kills { get; set; }
-
         public int Assists { get; set; }
-
         public int Damage { get; set; }
-
         public DateTime Date { get; set; }
 
         public int UserID { get; set; }
-
         public int CharacterID { get; set; }
+
+        public Character Character { get; set; }
     }
 }

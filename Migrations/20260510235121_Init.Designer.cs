@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindYourMain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260510224756_AddStatsTable")]
-    partial class AddStatsTable
+    [Migration("20260510235121_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,8 @@ namespace FindYourMain.Migrations
 
                     b.HasKey("StatID");
 
+                    b.HasIndex("CharacterID");
+
                     b.ToTable("Stats");
                 });
 
@@ -133,6 +135,17 @@ namespace FindYourMain.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("FindYourMain.Models.Stats", b =>
+                {
+                    b.HasOne("FindYourMain.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
                 });
 #pragma warning restore 612, 618
         }
