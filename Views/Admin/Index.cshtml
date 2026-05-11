@@ -1,0 +1,8 @@
+@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<h1>Admin Panel</h1>
+
+@foreach (var user in Model)
+{
+    <p>@user.Email</p>
+}

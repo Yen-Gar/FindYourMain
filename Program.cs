@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AppDbContextConnection' not found.");;
+var connectionString = "Data Source=findyourmain.db";
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -21,12 +21,19 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated(); 
+}
+
 var app = builder.Build();
 
-// SEED ROLES
+//// SEED ROLES
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
     string[] roles = { "User", "Admin" };
 
@@ -35,6 +42,17 @@ using (var scope = app.Services.CreateScope())
         if (!await roleManager.RoleExistsAsync(role))
         {
             await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    
+    var user = await userManager.FindByEmailAsync("admin@test.nl");
+    if (user != null)
+    {
+        var isInRole = await userManager.IsInRoleAsync(user, "Admin");
+        if (!isInRole)
+        {
+            await userManager.AddToRoleAsync(user, "Admin");
         }
     }
 }
