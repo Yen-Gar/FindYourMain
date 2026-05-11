@@ -2,35 +2,28 @@
 
 <h1>Voer statistieken in</h1>
 
-<form method="post">
+<form asp-controller="Statistics" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
 
     <label>Kills</label>
     <input asp-for="Kills" />
-
     <br /><br />
 
     <label>Assists</label>
     <input asp-for="Assists" />
-
     <br /><br />
 
     <label>Damage</label>
     <input asp-for="Damage" />
-
     <br /><br />
 
     <label>User ID</label>
     <input asp-for="UserID" />
-
     <br /><br />
 
     <label>Character ID</label>
     <input asp-for="CharacterID" />
-
     <br /><br />
 
-    <button type="submit">
-        Opslaan
-    </button>
-
+    <button type="submit">Opslaan</button>
 </form>
