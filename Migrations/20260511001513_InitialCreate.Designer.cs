@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindYourMain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260510235121_Init")]
-    partial class Init
+    [Migration("20260511001513_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

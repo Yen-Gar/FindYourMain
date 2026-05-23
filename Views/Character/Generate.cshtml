@@ -1,25 +1,87 @@
-<h1>Genereer een karakter</h1>
+@model FindYourMain.Models.Character
 
-<form method="post">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 card shadow-sm p-4">
+            <h1 class="text-center h3 mb-4">Genereer een karakter</h1>
 
-    <label>Kies een game</label>
-    <select name="game">
-        <option>Overwatch</option>
-    </select>
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kies een game</label>
+                    <select name="game" id="gameSelect" class="form-select form-control-lg">
+                        <option value="Overwatch">Overwatch</option>
+                        <option value="League of Legends">League of Legends</option>
+                        <option value="Valorant">Valorant</option>
+                    </select>
+                </div>
 
-    <br />
-    <br />
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kies een rol</label>
+                    <select name="role" id="roleSelect" class="form-select form-control-lg">
+                        <option value="Tank">Tank</option>
+                        <option value="Support">Support</option>
+                        <option value="DPS">DPS</option>
+                    </select>
+                </div>
 
-    <label>Kies een rol</label>
-    <select name="role">
-        <option>Tank</option>
-        <option>Support</option>
-        <option>DPS</option>
-    </select>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Playstyle</label>
+                    <select name="playstyle" class="form-select form-control-lg">
+                        <option value="Fast Movement">Fast Movement</option>
+                        <option value="Aggressive">Aggressive</option>
+                        <option value="Tactical">Tactical</option>
+                        <option value="Healer">Healer</option>
+                    </select>
+                </div>
 
-    <br />
-    <br />
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Genereren</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    <button type="submit">Genereren</button>
+@section Scripts {
+    <script>
+        const gameSelect = document.getElementById('gameSelect');
+        const roleSelect = document.getElementById('roleSelect');
 
-</form>
+        // Hier bewaren we de rollen per game
+        const rolesPerGame = {
+            "Overwatch": [
+                { value: "Tank", text: "Tank" },
+                { value: "Support", text: "Support" },
+                { value: "DPS", text: "DPS" }
+            ],
+            "League of Legends": [
+                { value: "Tank", text: "Tank" },
+                { value: "Support", text: "Support" },
+                { value: "DPS", text: "DPS" }
+            ],
+            "Valorant": [
+                { value: "Duelist", text: "Duelist" },
+                { value: "Initiator", text: "Initiator" },
+                { value: "Controller", text: "Controller" },
+                { value: "Sentinel", text: "Sentinel" }
+            ]
+        };
+
+        // Luister naar veranderingen in de Game dropdown
+        gameSelect.addEventListener('change', function() {
+            const selectedGame = this.value;
+            const roles = rolesPerGame[selectedGame];
+
+            // Maak de Rol dropdown helemaal leeg
+            roleSelect.innerHTML = '';
+
+            // Voeg de nieuwe, juiste opties toe
+            roles.forEach(role => {
+                const option = document.createElement('option');
+                option.value = role.value;
+                option.text = role.text;
+                roleSelect.appendChild(option);
+            });
+        });
+    </script>
+}

@@ -12,7 +12,7 @@ namespace FindYourMain.Models
         public int Damage { get; set; }
         public DateTime Date { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public int CharacterID { get; set; }
 
         public Character Character { get; set; }

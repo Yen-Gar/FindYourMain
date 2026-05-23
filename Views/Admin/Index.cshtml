@@ -1,0 +1,22 @@
+@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<h1>Admin Panel</h1>
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var user in Model)
+{
+    <tr>
+        <td>@user.Email</td>
+        <td>
+            <a href="/Admin/MakeAdmin?id=@user.Id" class="btn btn-primary">
+                Make Admin
+            </a>
+        </td>
+    </tr>
+}
+</table>

@@ -1,33 +1,47 @@
 using Microsoft.AspNetCore.Mvc;
-using FindYourMain.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using FindYourMain.Data;
+using FindYourMain.Models;
 
-namespace FindYourMain.Controllers
+[Authorize]
+public class StatisticsController : Controller
 {
-	public class StatisticsController : Controller
-	{
-		private readonly AppDbContext _context;
+    private readonly AppDbContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
 
-		public StatisticsController(AppDbContext context)
-		{
-			_context = context;
-		}
+    public StatisticsController(AppDbContext context, UserManager<IdentityUser> userManager)
+    {
+        _context = context;
+        _userManager = userManager;
+    }
 
-		public IActionResult Create()
-		{
-			return View();
-		}
+    
+    public IActionResult Create()
+    {
+        return View();
+    }
 
-		[HttpPost]
-		public IActionResult Create(Stats stats)
-		{
-			stats.Date = DateTime.Now;
+    [HttpPost]
+    public async Task<IActionResult> Create(Stats stats)
+    {
+        // 1. Haal de huidige ingelogde gebruiker op
+        var user = await _userManager.GetUserAsync(User);
 
-			_context.Stats.Add(stats);
+        // 2. Controleer of er wel iemand is ingelogd
+        if (user == null)
+        {
+            return Challenge(); // Stuurt je naar de login als je sessie is verlopen
+        }
 
-			_context.SaveChanges();
+        // 3. Koppel de statistiek aan de ECHTE gebruiker (Foreign Key fix)
+        stats.UserID = user.Id;
+        stats.Date = DateTime.Now;
 
-			return RedirectToAction("Index", "Home");
-		}
-	}
+        // 4. Opslaan in de database
+        _context.Stats.Add(stats);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", "Dashboard");
+    }
 }

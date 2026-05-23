@@ -1,36 +1,31 @@
 @model FindYourMain.Models.Stats
 
-<h1>Voer statistieken in</h1>
+<div class="card-box">
 
-<form method="post">
+    <h1>Voeg Match Statistics toe</h1>
 
-    <label>Kills</label>
-    <input asp-for="Kills" />
+    <form asp-controller="Statistics"
+          asp-action="Create"
+          method="post">
 
-    <br /><br />
+        @Html.AntiForgeryToken()
 
-    <label>Assists</label>
-    <input asp-for="Assists" />
+        <label>Kills</label>
+        <input asp-for="Kills" class="form-control" />
 
-    <br /><br />
+        <label>Assists</label>
+        <input asp-for="Assists" class="form-control" />
 
-    <label>Damage</label>
-    <input asp-for="Damage" />
+        <label>Damage</label>
+        <input asp-for="Damage" class="form-control" />
 
-    <br /><br />
+        <label>Character ID</label>
+        <input asp-for="CharacterID" class="form-control" />
 
-    <label>User ID</label>
-    <input asp-for="UserID" />
+        <button type="submit" class="btn-primary">
+            Save Statistics
+        </button>
 
-    <br /><br />
+    </form>
 
-    <label>Character ID</label>
-    <input asp-for="CharacterID" />
-
-    <br /><br />
-
-    <button type="submit">
-        Opslaan
-    </button>
-
-</form>
+</div>
