@@ -79,6 +79,10 @@ namespace FindYourMain.Controllers
                     {
                         character = new Character { Name = "Neon", Role = role, Game = game, Playstyle = playstyle };
                     }
+                    else if (playstyle == "Healer")
+                    {
+                       
+                        character = new Character { Name = "Phoenix", Role = role, Game = game, Playstyle = playstyle };
                     else
                     {
                         character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
