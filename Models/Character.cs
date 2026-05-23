@@ -13,6 +13,6 @@ namespace FindYourMain.Models
 
         public string Playstyle { get; set; }
 
-        public int Game { get; set; }
+        public string Game { get; set; }
     }
 }

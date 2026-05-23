@@ -1,40 +1,121 @@
-using Microsoft.AspNetCore.Mvc;
+using FindYourMain.Data; // Zorg dat dit matcht met jouw DbContext map
 using FindYourMain.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindYourMain.Controllers
 {
     public class CharacterController : Controller
     {
+        private readonly AppDbContext _context;
+
+        // De constructor: Dit lost de '_context' en 'View' errors op!
+        public CharacterController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Hiermee opent de 'Generate' pagina in de browser
+        [HttpGet]
         public IActionResult Generate()
         {
             return View();
         }
 
+        // POST: Jouw logica om het karakter te berekenen en op te slaan
         [HttpPost]
-        public IActionResult Generate(string game, string role)
+        public IActionResult Generate(string game, string role, string playstyle)
         {
-            Character generatedCharacter = new Character();
+            Character character;
 
+            // ===== OVERWATCH =====
             if (game == "Overwatch")
             {
                 if (role == "Tank")
                 {
-                    generatedCharacter.Name = "Reinhardt";
-                    generatedCharacter.Role = "Tank";
+                    if (playstyle == "Aggressive")
+                    {
+                        character = new Character { Name = "Reinhardt", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else if (playstyle == "Fast Movement")
+                    {
+                        character = new Character { Name = "Wrecking Ball", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Winston", Role = role, Game = game, Playstyle = playstyle };
+                    }
                 }
                 else if (role == "Support")
                 {
-                    generatedCharacter.Name = "Mercy";
-                    generatedCharacter.Role = "Support";
+                    if (playstyle == "Healer")
+                    {
+                        character = new Character { Name = "Mercy", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Lucio", Role = role, Game = game, Playstyle = playstyle };
+                    }
                 }
                 else
                 {
-                    generatedCharacter.Name = "Tracer";
-                    generatedCharacter.Role = "DPS";
+                    if (playstyle == "Fast Movement")
+                    {
+                        character = new Character { Name = "Tracer", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Soldier 76", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                }
+            }
+            // ===== VALORANT =====
+            else if (game == "Valorant")
+            {
+                if (playstyle == "Aggressive")
+                {
+                    character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else if (playstyle == "Tactical")
+                {
+                    character = new Character { Name = "Cypher", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else if (playstyle == "Fast Movement")
+                {
+                    character = new Character { Name = "Neon", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else
+                {
+                    character = new Character { Name = "Sage", Role = role, Game = game, Playstyle = playstyle };
+                }
+            }
+            // ===== LEAGUE OF LEGENDS =====
+            else
+            {
+                if (playstyle == "Aggressive")
+                {
+                    character = new Character { Name = "Yasuo", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else if (playstyle == "Fast Movement")
+                {
+                    character = new Character { Name = "Ahri", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else if (playstyle == "Healer")
+                {
+                    character = new Character { Name = "Soraka", Role = role, Game = game, Playstyle = playstyle };
+                }
+                else
+                {
+                    character = new Character { Name = "Lux", Role = role, Game = game, Playstyle = playstyle };
                 }
             }
 
-            return View("Result", generatedCharacter);
+            // Sla het karakter op in de database
+            _context.Characters.Add(character);
+            _context.SaveChanges();
+
+            // Toon het resultaat op de Result-pagina
+            return View("Result", character);
         }
     }
 }
