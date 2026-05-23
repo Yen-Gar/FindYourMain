@@ -70,23 +70,57 @@ namespace FindYourMain.Controllers
                 }
             }
             // ===== VALORANT =====
+            // ===== VALORANT =====
             else if (game == "Valorant")
             {
-                if (playstyle == "Aggressive")
+                if (role == "Duelist")
                 {
-                    character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
+                    if (playstyle == "Fast Movement")
+                    {
+                        character = new Character { Name = "Neon", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
+                    }
                 }
-                else if (playstyle == "Tactical")
+                else if (role == "Initiator")
                 {
-                    character = new Character { Name = "Cypher", Role = role, Game = game, Playstyle = playstyle };
+                    if (playstyle == "Tactical")
+                    {
+                        character = new Character { Name = "Sova", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Fade", Role = role, Game = game, Playstyle = playstyle };
+                    }
                 }
-                else if (playstyle == "Fast Movement")
+                else if (role == "Sentinel")
                 {
-                    character = new Character { Name = "Neon", Role = role, Game = game, Playstyle = playstyle };
+                    if (playstyle == "Tactical")
+                    {
+                        character = new Character { Name = "Cypher", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Sage", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                }
+                else if (role == "Controller")
+                {
+                    if (playstyle == "Aggressive")
+                    {
+                        character = new Character { Name = "Clove", Role = role, Game = game, Playstyle = playstyle };
+                    }
+                    else
+                    {
+                        character = new Character { Name = "Omen", Role = role, Game = game, Playstyle = playstyle };
+                    }
                 }
                 else
                 {
-                    character = new Character { Name = "Sage", Role = role, Game = game, Playstyle = playstyle };
+                    // Fallback voor de zekerheid
+                    character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
                 }
             }
             // ===== LEAGUE OF LEGENDS =====
