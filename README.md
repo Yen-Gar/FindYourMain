@@ -48,8 +48,7 @@ of
 ## Repository clonen
 
 ```bash
-git clone https://github.com/JOUWNAAM/FindYourMain.git
-cd FindYourMain
+git clone https://github.com/Yen-Gar/FindYourMain.git
 ```
 
 ## Database aanmaken
