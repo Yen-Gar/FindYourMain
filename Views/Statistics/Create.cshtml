@@ -19,10 +19,13 @@
         <label>Damage</label>
         <input asp-for="Damage" class="form-control" />
 
-        <label>Character ID</label>
-        <input asp-for="CharacterID" class="form-control" />
+        <label>Character</label>
+        <input type="text" class="form-control"  />
+
+        <input type="hidden" asp-for="CharacterID" value="1" />
 
         <button type="submit" class="btn-primary">
+
             Save Statistics
         </button>
 

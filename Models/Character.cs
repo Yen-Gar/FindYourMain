@@ -5,7 +5,7 @@ namespace FindYourMain.Models
     public class Character
     {
         [Key]
-        public int CharacterID { get; set; }
+        public string CharacterID { get; set; }
 
         public string Name { get; set; }
 
