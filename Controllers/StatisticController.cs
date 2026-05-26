@@ -16,7 +16,6 @@ public class StatisticsController : Controller
         _userManager = userManager;
     }
 
-    
     public IActionResult Create()
     {
         return View();
@@ -38,7 +37,13 @@ public class StatisticsController : Controller
         stats.UserID = user.Id;
         stats.Date = DateTime.Now;
 
-        // 4. Opslaan in de database
+        // 4. FIX: Controleer of het formulier correct is ingevuld (voorkomt lege invoer crash)
+        if (!ModelState.IsValid)
+        {
+            return View(stats); // Stuurt de gebruiker terug naar het formulier met foutmeldingen
+        }
+
+        // 5. Opslaan in de database
         _context.Stats.Add(stats);
         await _context.SaveChangesAsync();
 
