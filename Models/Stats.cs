@@ -24,6 +24,6 @@ namespace FindYourMain.Models
         [Required(ErrorMessage = "Kies een Character ID.")]
         public int? CharacterID { get; set; }
 
-        public Character Character { get; set; }
+        public Character? Character { get; set; }
     }
 }
