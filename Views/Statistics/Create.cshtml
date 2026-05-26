@@ -10,17 +10,31 @@
 
         @Html.AntiForgeryToken()
 
-        <label>Kills</label>
-        <input asp-for="Kills" class="form-control" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <label>Assists</label>
-        <input asp-for="Assists" class="form-control" />
+        <div class="form-group mb-3">
+            <label>Kills</label>
+            <input asp-for="Kills" class="form-control" />
+            <span asp-validation-for="Kills" class="text-danger"></span>
+        </div>
 
-        <label>Damage</label>
-        <input asp-for="Damage" class="form-control" />
+        <div class="form-group mb-3">
+            <label>Assists</label>
+            <input asp-for="Assists" class="form-control" />
+            <span asp-validation-for="Assists" class="text-danger"></span>
+        </div>
 
-        <label>Character ID</label>
-        <input asp-for="CharacterID" class="form-control" />
+        <div class="form-group mb-3">
+            <label>Damage</label>
+            <input asp-for="Damage" class="form-control" />
+            <span asp-validation-for="Damage" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Character </label>
+            <input asp-for="CharacterID" class="form-control" />
+            <span asp-validation-for="CharacterID" class="text-danger"></span>
+        </div>
 
         <button type="submit" class="btn-primary">
             Save Statistics
@@ -29,3 +43,9 @@
     </form>
 
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
