@@ -13,7 +13,7 @@ namespace FindYourMain.Models
         public DateTime Date { get; set; }
 
         public string UserID { get; set; }
-        public int CharacterID { get; set; }
+        public string CharacterID { get; set; }
 
         public Character Character { get; set; }
     }
