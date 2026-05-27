@@ -22,7 +22,7 @@ public class StatisticsController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Stats stats)
+    public async Task<IActionResult> Create(Stats stats, string characterNameInvoer)
     {
         // 1. Haal de huidige ingelogde gebruiker op
         var user = await _userManager.GetUserAsync(User);
@@ -30,20 +30,37 @@ public class StatisticsController : Controller
         // 2. Controleer of er wel iemand is ingelogd
         if (user == null)
         {
-            return Challenge(); // Stuurt je naar de login als je sessie is verlopen
+            return Challenge();
         }
 
-        // 3. Koppel de statistiek aan de ECHTE gebruiker (Foreign Key fix)
+        // 3. Koppel de statistiek aan de ECHTE gebruiker
         stats.UserID = user.Id;
         stats.Date = DateTime.Now;
 
-        // 4. FIX: Controleer of het formulier correct is ingevuld (voorkomt lege invoer crash)
-        if (!ModelState.IsValid)
+        
+        if (!string.IsNullOrEmpty(characterNameInvoer))
         {
-            return View(stats); // Stuurt de gebruiker terug naar het formulier met foutmeldingen
-        }
+            // Zoek of het karakter al bestaat (bijv. "Jinx")
+            var bestaandCharacter = _context.Characters
+                .FirstOrDefault(c => c.Name.ToLower() == characterNameInvoer.ToLower());
 
-        // 5. Opslaan in de database
+            if (bestaandCharacter != null)
+            {
+                stats.CharacterID = bestaandCharacter.CharacterID; 
+            }
+            else
+            {
+                // Bestaat nog niet? Maak hem live aan!
+                var nieuwCharacter = new Character { Name = characterNameInvoer };
+                _context.Characters.Add(nieuwCharacter);
+                await _context.SaveChangesAsync();
+
+                stats.CharacterID = nieuwCharacter.CharacterID;
+            }
+        }
+        // =============================================
+
+        // 4. Opslaan in de database
         _context.Stats.Add(stats);
         await _context.SaveChangesAsync();
 
