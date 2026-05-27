@@ -1,7 +1,8 @@
-using FindYourMain.Data; // Zorg dat dit matcht met jouw DbContext map
+using FindYourMain.Data;
 using FindYourMain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FindYourMain.Controllers
 {
@@ -9,7 +10,7 @@ namespace FindYourMain.Controllers
     {
         private readonly AppDbContext _context;
 
-        // De constructor: Dit lost de '_context' en 'View' errors op!
+        // De constructor
         public CharacterController(AppDbContext context)
         {
             _context = context;
@@ -70,7 +71,6 @@ namespace FindYourMain.Controllers
                 }
             }
             // ===== VALORANT =====
-            // ===== VALORANT =====
             else if (game == "Valorant")
             {
                 if (role == "Duelist")
@@ -81,7 +81,6 @@ namespace FindYourMain.Controllers
                     }
                     else if (playstyle == "Healer")
                     {
-                       
                         character = new Character { Name = "Phoenix", Role = role, Game = game, Playstyle = playstyle };
                     }
                     else
@@ -124,7 +123,6 @@ namespace FindYourMain.Controllers
                 }
                 else
                 {
-                    // Fallback voor de zekerheid
                     character = new Character { Name = "Jett", Role = role, Game = game, Playstyle = playstyle };
                 }
             }
@@ -149,12 +147,24 @@ namespace FindYourMain.Controllers
                 }
             }
 
-            // Sla het karakter op in de database
-            _context.Characters.Add(character);
-            _context.SaveChanges();
+            // ===== DATABASE CONTROLE & SAVE =====
+            // ===== DATABASE CONTROLE & SAVE =====
+            var bestaandCharacter = _context.Characters
+                .FirstOrDefault(c => c.Name.ToLower() == character.Name.ToLower());
 
-            // Toon het resultaat op de Result-pagina
+            if (bestaandCharacter != null)
+            {
+                character = bestaandCharacter;
+            }
+            else
+            {
+                character.CharacterID = Guid.NewGuid().ToString();
+
+                _context.Characters.Add(character);
+                _context.SaveChanges();
+            }
+
             return View("Result", character);
-        }
-    }
-}
+        } 
+    } 
+} 
