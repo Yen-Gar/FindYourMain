@@ -20,6 +20,10 @@ namespace FindYourMain.Models
         public DateTime Date { get; set; }
 
         public string UserID { get; set; }
+<<<<<<< HEAD
+        public string CharacterID { get; set; }
+=======
+>>>>>>> main
 
         [Required(ErrorMessage = "Kies een Character ID.")]
         public int? CharacterID { get; set; }
